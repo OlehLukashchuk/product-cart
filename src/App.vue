@@ -16,3 +16,4 @@ export default {
   }
 }
 </script>
+<!-- Fix products count -->

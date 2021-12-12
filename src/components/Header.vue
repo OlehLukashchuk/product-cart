@@ -14,28 +14,39 @@
     </nav>
     <button @click="toggleSidebar" class="top-bar-cart-link">
       <i class="icofont-cart-alt icofont-1x"></i>
-      <span>Cart (0)</span>
+      <span>( {{cardTotal}} )</span>
     </button>
   </header>
 
-  <Sidebar @toggleClick="toggleSidebar" v-if="showSidebar"/>
+  <Sidebar @toggleClick="toggleSidebar" @removeFromCart="getCardTotal" v-if="showSidebar"/>
 
-  <router-view />
+  <router-view :addToCard="getCardTotal"/>
 </template>
 
 <script>
 import Sidebar from './Sidebar.vue'
+import food from '@/food.json'
 
 export default {
   name: 'Header',
   data () {
     return {
-      showSidebar: false
+      showSidebar: false,
+      cardTotal: 0
     }
   },
   methods: {
     toggleSidebar () {
       this.showSidebar = !this.showSidebar
+    },
+    getCardTotal () {
+      console.log(true)
+      this.cardTotal = 0
+      food.forEach(el => {
+        if (el.quantity) {
+          this.cardTotal += el.quantity
+        }
+      })
     }
   },
   components: {
